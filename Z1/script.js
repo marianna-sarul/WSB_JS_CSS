@@ -82,9 +82,35 @@ function validateNumber(number) {
 }
 
 function validateRadio(radio) {
-    // todo
+    const input = document.querySelector("input[name='favouriteNumber']");
 
-    return true;
+     if(radio){
+        input.className = "";
+
+        const nameMessage = document.getElementById("favouriteNumber-input-message");
+        if (nameMessage) {
+            //jeśli wyświetla się komunikat - usuwamy go
+            nameMessage.parentElement.removeChild(nameMessage);
+        }
+        return true;  
+     }
+     else{
+        input.className = "invalid";
+
+        // sprawdzamy, czy wyświetla się komunikat o błędzie w polu z numerem
+        if (!document.getElementById("favouriteNumber-input-message")) {
+            // tworzymy element, który będzie mówił o błędzie w wybranym polu
+            const small = document.createElement("small");
+            small.id = "favouriteNumber-input-message"; // nadajemy id - potem dzięki niemu dostaniemy się do elementu, żeby go usunąć
+            small.className = "invalid"; // nadajemy klasę - żeby był czerwony
+            small.innerText = "Niepoprawny ulubiony numer"; // dodajemy tekst, który wyświetli się użytkownikowi
+
+            // doczepiamy element jako "rodzeństwo" inputa
+            input.parentElement.appendChild(small);
+        }
+         return false;
+     }
+
 }
 
 function validatePassword(password) {
