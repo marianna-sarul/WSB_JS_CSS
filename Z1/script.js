@@ -141,7 +141,28 @@ function validatePassword(password) {
 }
 
 function validateRepeatedPassword(password, repeatedPassword) {
-    // todo
+    const input = document.querySelector("input[name='password2']");
 
-    return true;
+    const valid = password == repeatedPassword;
+    if (valid) {
+    
+        input.className = "";
+
+        const nameMessage = document.getElementById("repeatPassword-input-message");
+        if (nameMessage) {
+            nameMessage.parentElement.removeChild(nameMessage);
+        }
+    } else {
+
+        input.className = "invalid";
+
+        if (!document.getElementById("repeatPassword-input-message")) {
+            const small = document.createElement("small");
+            small.id = "repeatPassword-input-message"; 
+            small.className = "invalid"; 
+            small.innerText = "Powtórzone hasło powinno być takie samo jak pierwsze"
+            input.parentElement.appendChild(small);
+        }
+    }
+    return valid;    
 }
