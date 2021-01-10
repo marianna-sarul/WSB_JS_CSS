@@ -89,7 +89,6 @@ function validateRadio(radio) {
 
         const nameMessage = document.getElementById("favouriteNumber-input-message");
         if (nameMessage) {
-            //jeśli wyświetla się komunikat - usuwamy go
             nameMessage.parentElement.removeChild(nameMessage);
         }
         return true;  
@@ -97,15 +96,11 @@ function validateRadio(radio) {
      else{
         input.className = "invalid";
 
-        // sprawdzamy, czy wyświetla się komunikat o błędzie w polu z numerem
         if (!document.getElementById("favouriteNumber-input-message")) {
-            // tworzymy element, który będzie mówił o błędzie w wybranym polu
             const small = document.createElement("small");
-            small.id = "favouriteNumber-input-message"; // nadajemy id - potem dzięki niemu dostaniemy się do elementu, żeby go usunąć
-            small.className = "invalid"; // nadajemy klasę - żeby był czerwony
-            small.innerText = "Niepoprawny ulubiony numer"; // dodajemy tekst, który wyświetli się użytkownikowi
-
-            // doczepiamy element jako "rodzeństwo" inputa
+            small.id = "favouriteNumber-input-message"; 
+            small.className = "invalid"; 
+            small.innerText = "Niepoprawny ulubiony numer"; 
             input.parentElement.appendChild(small);
         }
          return false;
@@ -114,10 +109,35 @@ function validateRadio(radio) {
 }
 
 function validatePassword(password) {
-    // regex do hasła: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
-    // todo
+        // walidujemy numer, podany w argumencie - w tym wypadku sprawdzamy, czy pasuje do wzorca
+        const valid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(password);
 
-    return true;
+        // odszukujemy na stronie odpowiednie pole - input, w którym został wpisany numer
+        const input = document.querySelector("input[name='password']");
+    
+        if (valid) {
+    
+            input.className = "";
+    
+            const nameMessage = document.getElementById("password-input-message");
+            if (nameMessage) {
+                nameMessage.parentElement.removeChild(nameMessage);
+            }
+        } else {
+    
+            input.className = "invalid";
+    
+            if (!document.getElementById("password-input-message")) {
+                const small = document.createElement("small");
+                small.id = "password-input-message"; 
+                small.className = "invalid"; 
+                small.innerText = "Niepoprawne haslo. Powinno zawierać conajmniej 8 znaków, co najmniej 1 cyfrę, co najmniej 1 wielką literę i co najmniej 1 małą literę"
+                input.parentElement.appendChild(small);
+            }
+        }
+            return valid;
+    
+    
 }
 
 function validateRepeatedPassword(password, repeatedPassword) {
